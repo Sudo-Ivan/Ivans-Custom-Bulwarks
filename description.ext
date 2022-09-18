@@ -1,0 +1,224 @@
+onLoadMission = "Hold out as long as you can!";
+onLoadIntro = "Defend yourself";
+onLoadName = "Ivans Custom Bulwarks";
+briefingName = "Ivans Custom Bulwarks";
+overviewText = "Survive by scavenging equipment, in a randomly selected city, against ever increasing waves of hostiles.";
+author = "Ivan";
+overviewPicture = "preview.paa";
+
+loadScreen = "preview.paa";
+
+respawn = 2;
+respawnOnStart = -1;
+respawnDialog = 0;
+respawnTemplates[] = {"Base"};
+ReviveMode = 1;
+ReviveUnconsciousStateMode = 0;
+ReviveRequiredItems = 0;
+ReviveRequiredTrait = 0;
+ReviveBleedOutDelay = 120;
+
+corpseManagerMode = 2;
+corpseLimit = 5;
+wreckLimit = 2;
+corpseRemovalMinTime = 180;
+corpseRemovalMaxTime = 181;
+wreckRemovalMinTime = 30;
+wreckRemovalMaxTime = 50;
+
+class Header
+{
+	gameType =  Survive;
+	minPlayers =  	 1;
+	maxPlayers = 	 12;
+};
+
+#include "shared\defines.hpp"
+
+class CfgFunctions
+{
+	#include "score\Functions.hpp"
+	#include "supports\Functions.hpp"
+	#include "bulwark\Functions.hpp"
+	#include "sound\Functions.hpp"
+	#include "area\Functions.hpp"
+	#include "build\Functions.hpp"
+	#include "factions\Functions.hpp"
+	#include "hostiles\Functions.hpp"
+	#include "loot\Functions.hpp"
+
+	#include "shared\Functions.hpp"
+	#include "lobby\Functions.hpp"
+
+	#include "server\Functions.hpp"
+	#include "player\Functions.hpp"
+};
+
+class CfgRemoteExec
+{
+	class Functions
+	{
+		mode = 2;
+		class init {};
+		class add {};
+		class spend {};
+		class hit {};
+		class killed {};
+		class updateHud {};
+		class hitMarker {};
+		class supplyDrop {};
+		class support {};
+		class airStrike {};
+		class ragePack {};
+		class say3DGlobal {};
+		class createBlur {};
+		class suiExplode{};
+
+		class BIS_fnc_endMissionServer {};
+
+		class lobby_fnc_startGame {};
+		class server_fnc_startServer {};
+		class server_fnc_registerPlayer {};
+		class player_fnc_reassignCurator {};
+
+		class killPoints_fnc_change {};
+		class killPoints_fnc_add {};
+		class killPoints_fnc_spend {};
+		class killPoints_fnc_updateHud {};
+
+		class build_fnc_doPickup {};
+		class build_fnc_doPickupLocal {};
+		class build_fnc_doCreate {};
+		class build_fnc_doPlace {};
+		class build_fnc_doPlaceLocal {};
+		class build_fnc_doMove {};
+		class build_fnc_doMoveLocal {};
+	};
+};
+
+#include "dialog\defines.hpp"
+class RscTitles
+{
+	#include "score\hud.hpp"
+};
+
+class CfgDebriefing
+{
+	class End1
+	{
+		title = [END];
+		subtitle = "You were wiped out";
+		description = "Game Over";
+		pictureBackground = "";
+		picture = "KIA";
+		pictureColor[] = {0.6,0.1,0.2,1};
+	};
+	class End2
+	{
+		title = "[BULWARK SAFE]";
+		subtitle = "You Won";
+		description = "Your bulwark is secure";
+		pictureBackground = "";
+		picture = "b_inf";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+
+	class Abort
+	{
+		title = "[ABORTED]";
+		subtitle = "Mission Aborted";
+		description = "Maybe next time...";
+		pictureBackground = "";
+		picture = "b_inf";
+		pictureColor[] = {0.0,0.3,0.6,1};
+	};
+};
+
+class CfgCommunicationMenu
+{
+	#include "supports\CommunicationMenu.h"
+};
+
+
+class CfgSounds
+{
+	sounds[] = {boxSpin, rageSound};
+	class boxSpin
+	{
+		name = "Gambling box sound";
+		sound[] = {"\sound\boxspin.ogg", 1, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class rageSoundInternal
+	{
+		name = "Rage support SFX";
+		sound[] = {"\sound\rageStimpack_internal.ogg", 10, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class rageSoundExternal
+	{
+		name = "Rage support SFX";
+		sound[] = {"\sound\rageStimpack_external.ogg", 8, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class armakartMusic
+	{
+		name = "Armakart music";
+		sound[] = {"\sound\armakart_music.ogg", 30, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class teleportHit
+	{
+		name = "Field teleport";
+		sound[] = {"\sound\energyimpact.ogg", 1, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class pointsLootSound
+	{
+		name = "Points Loot Audio";
+		sound[] = {"\sound\lootPointsAudio.ogg", 10, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class SuicideSound
+	{
+		name = "Suicide Bomber Sound";
+		sound[] = {"\sound\bomber.ogg", 15, 1, 100};
+		titles[] = {0,""};
+	};
+
+	class comNoise
+	{
+		name = "Com Noise";
+		sound[] = {"\sound\comNoise.ogg", 10, 1};
+		titles[] = {0,""};
+	};
+
+	class teleport
+	{
+		name = "teleport";
+		sound[] = {"\sound\teleport.ogg", 5, 1};
+		titles[] = {0,""};
+	};
+};
+
+//Notification for Special Waves
+class CfgNotifications
+{
+	class SpecialWarning
+	{
+		title = "WARNING!!";
+		iconPicture = "A3\ui_f\data\Map\Markers\Military\warning_CA.paa";
+		description = "%1";
+		color[] = {1,0,0,1};
+		duration = 5;
+	};
+};
+
+#include "bulwark\dialog.hpp"
+#include "lobby\dialog.hpp"
